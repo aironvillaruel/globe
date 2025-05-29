@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snow</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/344d28dac7.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <audio src="music/itolamang.mp3" loop id="musicOne"></audio>
+    <div class="popup">
+        <div class="letter" id="letter">
+            <p>Dear Love,</p>
+            <p>Una sa lahat humihingi ako ng kapatawaran sa mga nagawa ko, I admit it and sincere akong humihingi ng
+                apology sa'yo. Marahil napakaformal nitong sulat dala ng bigat ng emotions ko, salamat kasi
+                kahit nagkakaroon ng problem is hindi ka kaagad sumusuko. Oo we always hurting each other verbally pero
+                in the end of the day hindi natin masyadong tinitake seriously yung mga ganoong bagay like open pa rin
+                tayo sa pag-uusap. Patuloy
+                nagkakamali ang isa't isa, patuloy ding tinatama. So I chose this way kasi ito yung alam ko at
+                kaya ko, so bakit nga ba snow globe? simple lang ever since bata pa ako I always wanted to have that or
+                yung music box na tumutunog kapag pinaikot, it's kinda relaxing makarinig ng music habang nakikita yung
+                scene sa snow globe. I really wanted to have that , but malayo tayo kaya gumawa nalang ako ng sarili
+                kong snow globe sa paraang kaya ko and at least customizable as you can see naman andiyan tayo sa loob
+                ng snow globe.</p>
+            <p>Again I'm sorry for everything, I know I can't change the past but I can always change the future maybe
+                this is not the right time to trust me. I love you
+                so much and I hope you will always be there for me. I will always be here for you, no matter what
+                happens. I will always love you. Oo nga pala pwede mo baguhin yung song just click next or previous</p>
+            </p>
+            <button class="close" onclick="closeLetter()">Close</button>
+        </div>
+        <div class="music" id="music">
+            <div class="card">
+                <div class="card__content">
+                    <div class="music_card">
+                        <img id="coverImage" src="images/ito.jpg" alt="">
+                        <div class="music_info">
+                            <p class="title" id="songTitle">Ito Lamang</p>
+                            <p class="artist" id="songArtist">Project Romeo</p>
+                            <div class="controls_music">
+                                <button id="prevBtn" onclick="prevSong()"><i
+                                        class="fa-solid fa-caret-left"></i></button>
+                                <button id="pauseBtn"><i class="fa-solid fa-pause"></i></button>
+                                <button id="playBtn" style="display: none;"><i class="fa-solid fa-play"></i></button>
+                                <button id="nextBtn" onclick="nextSong()"><i
+                                        class="fa-solid fa-caret-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="shadow"></div>
+    <div class="base behind"></div>
+    <div class="globe">
+        <img src="images/boy.png" alt="Decoration" class="house-front-image">
+        <div class="snow-settled"></div>
+        <div class="snow-settled-surface"></div>
+        <div class="tree">
+            <div class="layer top"></div>
+            <div class="layer middle"></div>
+            <div class="layer bottom"></div>
+        </div>
+        <div class="house">
+
+            <div class="wall side">
+                <div class="window"></div>
+            </div>
+            <div class="wall front">
+                <div class="door"></div>
+            </div>
+            <div class="roof left"></div>
+            <div class="roof right"></div>
+        </div>
+        <div class="flake" style="--i: -9"></div>
+        <div class="flake" style="--i: -8"></div>
+        <div class="flake" style="--i: -7"></div>
+        <div class="flake" style="--i: -6"></div>
+        <div class="flake" style="--i: -5"></div>
+        <div class="flake" style="--i: -4"></div>
+        <div class="flake" style="--i: -3"></div>
+        <div class="flake" style="--i: -2"></div>
+        <div class="flake" style="--i: -1"></div>
+        <div class="flake" style="--i: 1"></div>
+        <div class="flake" style="--i: 2"></div>
+        <div class="flake" style="--i: 3"></div>
+        <div class="flake" style="--i: 4"></div>
+        <div class="flake" style="--i: 5"></div>
+        <div class="flake" style="--i: 6"></div>
+        <div class="flake" style="--i: 7"></div>
+        <div class="flake" style="--i: 8"></div>
+        <div class="flake" style="--i: 9"></div>
+        <div class="shine"></div>
+    </div>
+    <div class="base front">
+        <div class="shine"></div>
+    </div>
+    <div class="base bottom">
+        <button class="button" onclick="toggleLetter()">
+            <div class="bloom-container">
+                <div class="button-container-main">
+                    <div class="button-inner">
+                        <div class="back"></div>
+                        <div class="front">
+                        </div>
+                    </div>
+                    <div class="button-glass">
+                        <div class="back"></div>
+                        <div class="front"></div>
+                    </div>
+                </div>
+                <div class="bloom bloom1"></div>
+                <div class="bloom bloom2"></div>
+            </div>
+        </button>
+
+        <div class="shine"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
