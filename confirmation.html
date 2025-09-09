@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self' https://supabase.co https://*.supabase.co data: 'unsafe-eval' 'unsafe-inline'; 
+                   style-src 'self' 'unsafe-inline'; 
+                   script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com;">
+    <title>Email Confirmed - Moonwave</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0e142f 0%, #0c0c0c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: bounceIn 0.8s ease-out 0.2s both;
+        }
+
+        .success-icon::before {
+            content: '✓';
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: bounceIn 0.8s ease-out 0.2s both;
+        }
+
+        .error-icon::before {
+            content: '✗';
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .loading-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(45deg, #6c757d, #adb5bd);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .loading-icon::before {
+            content: '⟳';
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .message {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .user-email {
+            font-weight: bold;
+            color: #495057;
+            font-size: 16px;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0e142f 0%, #0c0c0c 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #495057);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .countdown {
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo (optional - add your logo image) -->
+        <!-- <img src="img/logo.png" alt="Moonwave Logo" class="logo"> -->
+        
+        <!-- Loading State -->
+        <div id="loadingState" class="hidden">
+            <div class="loading-icon"></div>
+            <h1>Confirming Your Email</h1>
+            <p class="message">Please wait while we verify your email confirmation...</p>
+        </div>
+
+        <!-- Success State -->
+        <div id="successState" >
+            <div class="success-icon"></div>
+            <h1>Email Confirmed Successfully!</h1>
+            <p class="message">
+                Congratulations! Your email has been verified and your account is now active.
+                You can now access all features of Moonwave.
+            </p>
+            <div id="userInfo" class="user-info hidden">
+                <div class="user-email" id="userEmail"></div>
+            </div>
+            <div class="actions">
+                <div  class="btn btn-primary">
+                    Please proceed to the Application
+                </div>
+               
+            </div>
+            <div class="countdown" id="countdown"></div>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="hidden">
+            <div class="error-icon"></div>
+            <h1 id="errorTitle">Confirmation Failed</h1>
+            <p class="message" id="errorMessage">
+                There was an issue confirming your email. This could be due to an expired or invalid confirmation link.
+            </p>
+            <div class="actions">
+                <button class="btn btn-primary" id="retryBtn" onclick="retryConfirmation()">
+                    Try Again
+                </button>
+                <button class="btn btn-secondary" id="resendErrorBtn" onclick="resendConfirmation()">
+                    Resend Confirmation Email
+                </button>
+                <a href="login.html" class="btn btn-danger">
+                    Back to Login
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
